@@ -1,0 +1,41 @@
+body {
+  background-color: lightgray;
+}
+
+
+.clearfix {
+  overflow: auto;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+
+.wraper {
+  width: 1200px;
+
+  margin: 30px auto;
+  border: 4px solid black;
+}
+
+.img-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 auto;
+  display: block;
+}
+
+.img-list__image {
+  float: left;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  margin-left: 3%;
+  margin-top: 10px;
+}
+
+.img-list__image img {
+  width: 100%;
+  height: 100%;
+}
