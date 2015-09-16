@@ -18,20 +18,18 @@
       // 27 - ESC
       // 13 - ENTER
       document.addEventListener('keyup', function (e) {
-        console.log(e);
         if (e.keyCode.toString() === '27') {
           over.parentNode.removeChild(over);
-          console.log(e);
+          over.innerHTML = '';
         }
       }, false);
     }
 
     // creating and adding picture to the overlay
     function createImage(img) {
-      var imageSrc = img.src;
       var newImage = document.createElement('img');
       newImage.setAttribute('alt', 'overlay image');
-      newImage.setAttribute('src', imageSrc);
+      newImage.setAttribute('src', img.src);
       
       newImage.addEventListener('load', function (e) {
         if (this.height > window.innerHeight) {
@@ -45,9 +43,21 @@
           this.height = window.innerHeight;
           this.width = this.width * this.ratio;
         }
-
+        centerImage(newImage);
         over.appendChild(newImage);
       }, false);
+
+      return newImage;
+    }
+
+    function centerImage (img) {
+      var diffX = (window.innerWidth - img.width) / 2;
+      var diffY = (window.innerHeight - img.height) / 2;
+
+      img.style.top = diffY + 'px';
+      img.style.left = diffX + 'px';
+
+      return img;
     }
 
     function overlay () {
