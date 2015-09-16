@@ -15,6 +15,11 @@
         }
       }, false);
       
+      over.addEventListener('click', function (e) {
+        over.parentNode.removeChild(over);
+        over.innerHTML = '';
+      }, false);
+
       // 27 - ESC
       // 13 - ENTER
       document.addEventListener('keyup', function (e) {
@@ -66,7 +71,6 @@
       over.style.width = window.innerWidth + 'px';
       over.style.height =  window.innerHeight + 'px';
       document.body.appendChild(over);
-
 
     }
 
