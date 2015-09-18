@@ -8,26 +8,45 @@
         list = document.querySelector('.img-list');
 
     function init() {
+      
+      // add overlay
       list.addEventListener('click', function (e) {
         if (e.target.tagName === 'IMG') {
           overlay();
+          console.log(e);
           createImage(e.target);
         }
       }, false);
       
+      // remove overlay
       over.addEventListener('click', function (e) {
-        over.parentNode.removeChild(over);
-        over.innerHTML = '';
+        removeOverlay(over);
       }, false);
 
       // 27 - ESC
       // 13 - ENTER
-      document.addEventListener('keyup', function (e) {
+      window.addEventListener('keyup', function (e) {
         if (e.keyCode.toString() === '27') {
-          over.parentNode.removeChild(over);
-          over.innerHTML = '';
+          removeOverlay(over);
         }
       }, false);
+
+      window.addEventListener('resize', function (e) {
+        over.style.height = window.innerHeight + 'px';
+        over.style.width = window.innerWidth + 'px';
+        // this is baad, but we should center the image
+        var img = document.querySelector('.overlay img');
+        centerImage(img);
+      }, false);
+    }
+
+
+    function removeOverlay (node) {
+      node.parentNode.removeChild(node);
+      // remove all childs
+      while(node.firstChild) {
+        node.removeChild(node.firstChild);
+      }
     }
 
     // creating and adding picture to the overlay
@@ -67,7 +86,6 @@
 
     function overlay () {
       over.setAttribute('class', 'overlay');
-
       over.style.width = window.innerWidth + 'px';
       over.style.height =  window.innerHeight + 'px';
       document.body.appendChild(over);
