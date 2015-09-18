@@ -19,12 +19,11 @@
       data.overlay.style.height = window.innerHeight + 'px';
 
       action();
-      console.log(data);
+
     }
 
     function action () {
       window.addEventListener('resize', function (evt) {
-        console.log(evt);
         if(data.overlay) {
           data.overlay.style.width =  document.documentElement.clientWidth + 'px';
           data.overlay.style.height =  document.documentElement.clientHeight + 'px'; 
@@ -33,8 +32,12 @@
 
       data.list.addEventListener('click', function (evt) {
         if(evt.target.tagName === 'IMG') {
-          console.log(evt);
-          appendBeforeLastScript(data.overlay);
+          var imgSrc = evt.target.getAttribute('src');
+          data.img = document.createElement('img');
+          data.img.setAttribute('src', imgSrc);
+          data.overlay.appendChild(data.img);
+
+          appendBeforeFirstScript(data.overlay);
         }
       }, false);
     }
