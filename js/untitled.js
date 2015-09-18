@@ -18,6 +18,8 @@
       data.overlay.style.width = window.innerWidth + 'px';
       data.overlay.style.height = window.innerHeight + 'px';
 
+      
+
       action();
 
     }
@@ -26,7 +28,9 @@
       window.addEventListener('resize', function (evt) {
         if(data.overlay) {
           data.overlay.style.width =  document.documentElement.clientWidth + 'px';
-          data.overlay.style.height =  document.documentElement.clientHeight + 'px'; 
+          data.overlay.style.height =  document.documentElement.clientHeight + 'px';
+
+          centerElement(data.img); 
         }
       }, false);
 
@@ -35,10 +39,21 @@
           var imgSrc = evt.target.getAttribute('src');
           data.img = document.createElement('img');
           data.img.setAttribute('src', imgSrc);
-          data.overlay.appendChild(data.img);
 
+          data.img.addEventListener('load', function (evt) {
+            centerElement(data.img);
+            data.overlay.appendChild(data.img);
+          }, false);
+
+          
           appendBeforeFirstScript(data.overlay);
+
         }
+      }, false);
+
+      data.overlay.addEventListener('click', function (evt) {
+        this.parentElement.removeChild(this);
+        this.removeChild(data.img);
       }, false);
     }
 
@@ -69,6 +84,22 @@
       
     }
 
+    function centerElement (elem) {
+      console.log('privet', elem.width, document.documentElement.clientHeight);
+      if(elem.width > document.documentElement.clientWidth) {
+        console.log('width');
+        elem.ratio = document.documentElement.clientWidth / elem.width;
+        elem.width *= elem.ratio;
+        elem.height *= elem.ratio;
+      }
+
+      if(elem.height > document.documentElement.clientHeight) {
+        console.log('height');
+        elem.ratio = document.documentElement.clientHeight / elem.height;
+        elem.width *= elem.ratio;
+        elem.height *= elem.ratio;
+      }
+    }
 
 
     return {
