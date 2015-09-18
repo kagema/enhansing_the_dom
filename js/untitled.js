@@ -15,22 +15,26 @@
 
       data.overlay = document.createElement('div');
       data.overlay.setAttribute('class', 'overlay');
-      data.overlay.width = window.innerWidth + 'px';
-      data.overlay.height = window.innerHeight + 'px';
+      data.overlay.style.width = window.innerWidth + 'px';
+      data.overlay.style.height = window.innerHeight + 'px';
+
+      action();
       console.log(data);
     }
 
     function action () {
-      document.addEventListener('resize', function () {
+      window.addEventListener('resize', function (evt) {
+        console.log(evt);
         if(data.overlay) {
-          data.overlay.width =  document.documentElement.clientWidth + 'px';
-          data.overlay.height =  document.documentElement.clientHeight + 'px'; 
+          data.overlay.style.width =  document.documentElement.clientWidth + 'px';
+          data.overlay.style.height =  document.documentElement.clientHeight + 'px'; 
         }
       }, false);
 
       data.list.addEventListener('click', function (evt) {
         if(evt.target.tagName === 'IMG') {
-          
+          console.log(evt);
+          appendBeforeLastScript(data.overlay);
         }
       }, false);
     }
@@ -42,13 +46,24 @@
      */
     
     function appendBeforeLastScript (overlay) {
-      
+
       var lastElement = document.body.lastElementChild;
-      while(lastElement.tagName === 'SCRIPT') {
-        lastElement = lastElement.previousSibling;
-      }
-      lastElement = lastElement.nextSibling;
-      document.body.insertBefore(data.overlay, lastElement);
+      /**
+       * if last element is SCRIPT we check previous siblings 
+       * and if they are not SCRIPT elements, we insert our 
+       * element just above it
+       */
+      
+      if(lastElement.tagName === 'SCRIPT') {
+        while(lastElement.tagName === 'SCRIPT') {
+          lastElement = lastElement.previousElementSibling;
+        }
+        lastElement = lastElement.nextElementSibling;
+        document.body.insertBefore(data.overlay, lastElement);
+      } else {
+        document.body.appendChild(overlay);
+      }    
+      
     }
 
 
