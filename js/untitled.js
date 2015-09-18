@@ -45,7 +45,7 @@
      * element before first SCRIPT element
      */
     
-    function appendBeforeLastScript (overlay) {
+    function appendBeforeFirstScript (overlay) {
 
       var lastElement = document.body.lastElementChild;
       /**
